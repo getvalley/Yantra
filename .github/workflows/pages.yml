@@ -35,8 +35,7 @@ jobs:
           zip=$(ls -1t -- "${zips[@]}" | head -n1)
           echo "Using $zip"
           rm -rf _tmp _site && mkdir _tmp
-          # skip the macOS junk that Finder adds, so it doesn't count as a second top-level entry
-          unzip -q "$zip" -d _tmp -x '__MACOSX/*' '*/.DS_Store' '.DS_Store'
+          unzip -q "$zip" -d _tmp
           # if the zip holds a single top-level folder, use that as the site root
           shopt -s dotglob
           entries=( _tmp/* )
@@ -46,8 +45,6 @@ jobs:
           else
             mv _tmp _site
           fi
-          echo "--- site root ---"
-          ls -la _site
 
       - name: Add the APK and write apk.json
         shell: bash
